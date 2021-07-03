@@ -14,6 +14,16 @@ type Body struct {
 	MaxdateStr string `json:"maxdate"`
 }
 
+const location = "Asia/Tokyo"
+
+func init() {
+	loc, err := time.LoadLocation(location)
+	if err != nil {
+		log.Panic(err)
+	}
+	time.Local = loc
+}
+
 func main() {
 	url := os.Getenv("EBICA_URL")
 	if url == "" {
@@ -36,7 +46,9 @@ func main() {
 		log.Panic(err)
 	}
 
-	if time.Now().AddDate(0, 1, 0).Day() != md.Day() {
+	now := time.Now()
+	log.Print(now)
+	if now.AddDate(0, 1, 0).Day() != md.Day() {
 		log.Panic("not found update")
 	}
 
