@@ -45,12 +45,10 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-
-	now := time.Now()
-	log.Print(now)
-	if now.AddDate(0, 1, 0).Day() != md.Day() {
-		log.Panic("not found update")
+	if md.Weekday() == time.Saturday {
+		log.Print("found update!")
+		return
 	}
 
-	log.Print("found update!")
+	log.Panic("not found update")
 }
